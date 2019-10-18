@@ -1,6 +1,7 @@
 package com.example.earthquackrerpot;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +31,45 @@ public class EarthquakeAdapter extends ArrayAdapter <Earthquake> {
         }
         Earthquake currentEarthquake = getItem(position);
 
-        TextView manitudeView = (TextView) listItemView.findViewById(R.id.magnitude);
+        TextView magnitudeView = listItemView.findViewById(R.id.magnitude);
 
+        //Pewarnaan di Magnitude
         String formattedMagnitude = formatMagnitude (currentEarthquake.getMagnitude());
+        magnitudeView.setText(formattedMagnitude);
+
+        GradientDrawable magnitudeCircle = (GradientDrawable) magnitudeView.getBackground();
+        int magnitudeColor = getMagnitudeColor(currentEarthquake.getMagnitude());
+        magnitudeCircle.setColor(magnitudeColor);
+
+        //Untuk mengamil tempat lokasi
+        String originalLocation = currentEarthquake.getLocation();
+        String primaryLocation;
+        String locationOffset;
+
+        if (originalLocation.contains(LOCATION_SEPARATOR)){
+            String[] parts = originalLocation.split(LOCATION_SEPARATOR);
+            locationOffset = parts [0] + LOCATION_SEPARATOR;
+            primaryLocation = parts [1];
+        }
+        else {
+            locationOffset = "Near the";
+            primaryLocation = originalLocation;
+        }
+        //Menampilkan Lokasi
+        TextView primaryLocationView = (TextView) listItemView.findViewById(R.id.primary_location);
+        primaryLocationView.setText(primaryLocation);
+
+        TextView locationOffsetView= listItemView.findViewById(R.id.location_offset);
+        locationOffsetView.setText(locationOffset);
+        //
+        Date dateObject = new Date(currentEarthquake.getTimeInMilliseconds());
+        TextView dateView = listItemView.findViewsWithText(R.id.date);
+        String formattedDate =  formatDate(dateObject);
+        dateView.setText(formattedDate);
+        TextView timeView = (TextView) listItemView.findViewById(R.id.time);
+                String formattedTime = formatTime(dateObject);
+                timeView.setText(formattedTime);
+
         return listItemView;
     }
 
