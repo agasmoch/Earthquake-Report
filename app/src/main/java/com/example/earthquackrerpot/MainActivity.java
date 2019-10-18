@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+//Link turtorial https://www.udacity.com/course/android-basics-networking--ud843
 public class MainActivity extends AppCompatActivity {
 
     @Override
