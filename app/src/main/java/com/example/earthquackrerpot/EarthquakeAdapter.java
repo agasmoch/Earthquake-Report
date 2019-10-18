@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +21,10 @@ public class EarthquakeAdapter extends ArrayAdapter <Earthquake> {
 
     public EarthquakeAdapter(Context context, int resource, List<Earthquake> objects) {
         super(context, resource, objects);
+    }
+
+    public EarthquakeAdapter(Context context, List<Earthquake> earthquakes) {
+        super(context,0,earthquakes);
     }
 
     @Override
@@ -63,7 +68,7 @@ public class EarthquakeAdapter extends ArrayAdapter <Earthquake> {
         locationOffsetView.setText(locationOffset);
         //
         Date dateObject = new Date(currentEarthquake.getTimeInMilliseconds());
-        TextView dateView = listItemView.findViewsWithText(R.id.date);
+        TextView dateView = listItemView.findViewById(R.id.date);
         String formattedDate =  formatDate(dateObject);
         dateView.setText(formattedDate);
         TextView timeView = (TextView) listItemView.findViewById(R.id.time);
